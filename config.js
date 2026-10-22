@@ -9,6 +9,6 @@
  *   Players can change it in Settings.
  */
 window.REDEEMER_CONFIG = {
-  apiUrl: '',
+  apiUrl: 'https://script.google.com/macros/s/AKfycbzRrKJ-Wo6QaUMF57P6sSi0rUzRJQfh4RJ-vgQRa4irE2a5Ayp0OIMiqcvnbHGWUZre8A/exec',
   timerSeconds: 15,
 };
