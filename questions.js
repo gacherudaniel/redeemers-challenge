@@ -1,0 +1,165 @@
+/*
+ * The Redeemer's Challenge — game content.
+ *
+ * Edit this file to change the questions, explanations, reflection and passage.
+ * Rules for questions:
+ *   - `id` must be unique and must not change once people have played (the
+ *     shared leaderboard grades answers by id).
+ *   - `answer` is the index of the correct choice: 0 = A, 1 = B, 2 = C, 3 = D.
+ *   - After editing, run `npm run build:gas` so the Apps Script copy (and its
+ *     server-side answer key) stay in step with this file.
+ */
+(function (root) {
+  'use strict';
+
+  const CONTENT = {
+    title: 'The Redeemer’s Challenge',
+    tagline: 'Will you uncover the story of redemption?',
+    intro:
+      'Eight quick questions about Boaz, the nearer relative, a sandal at the city gate, ' +
+      'and a baby named Obed. It takes about five minutes. Answer quickly for bonus points.',
+
+    questions: [
+      {
+        id: 'gate',
+        prompt: 'Where did Boaz go to settle the redemption matter?',
+        choices: ['The temple', 'The city gate', 'The threshing floor', 'Naomi’s house'],
+        answer: 1,
+        reference: 'Ruth 4:1',
+        explanation:
+          'Boaz went up to the town gate and sat down there. The gate was where the elders ' +
+          'heard legal and business matters, so the redemption would be settled openly, ' +
+          'in front of witnesses.',
+      },
+      {
+        id: 'nearer-relative',
+        prompt: 'Why did Boaz first approach another relative?',
+        choices: [
+          'The relative was wealthier.',
+          'The relative was a priest.',
+          'The relative had a prior opportunity to redeem the property because he was a closer relative.',
+          'Boaz wanted to avoid responsibility.',
+        ],
+        answer: 2,
+        reference: 'Ruth 4:3–6',
+        explanation:
+          'This man was a closer relative of Elimelech, so the right to redeem Naomi’s land ' +
+          'was his first. Boaz respected that order: no one else stood before this man, and ' +
+          'Boaz was next in line (v. 4).',
+      },
+      {
+        id: 'declined',
+        prompt: 'What did the nearer relative decide when he learned about the full responsibility involved?',
+        choices: [
+          'He redeemed the property immediately.',
+          'He declined to redeem it, allowing Boaz to proceed.',
+          'He left Bethlehem.',
+          'He asked Naomi to wait another year.',
+        ],
+        answer: 1,
+        reference: 'Ruth 4:6',
+        explanation:
+          'At first he agreed to buy the land (v. 4). When Boaz explained that redeeming it ' +
+          'also meant marrying Ruth, to keep the dead man’s name on his inheritance (v. 5), ' +
+          'he declined, fearing it would harm his own inheritance, and gave his right to Boaz (v. 6).',
+      },
+      {
+        id: 'sandal',
+        prompt: 'How did Boaz publicly confirm the transaction?',
+        choices: [
+          'By writing a private letter.',
+          'By making a promise to Naomi.',
+          'By exchanging a sandal according to the custom described in the passage.',
+          'By consulting the king.',
+        ],
+        answer: 2,
+        reference: 'Ruth 4:7–10',
+        explanation:
+          'In Israel at that time, a transfer of rights was confirmed when one man took off his ' +
+          'sandal and gave it to the other (v. 7). The nearer relative drew off his sandal (v. 8), ' +
+          'and Boaz called the elders and all the people as witnesses that he had acquired ' +
+          'the property and Ruth as his wife (vv. 9–10).',
+      },
+      {
+        id: 'married',
+        prompt: 'Whom did Boaz marry?',
+        choices: ['Naomi', 'Orpah', 'Ruth', 'The nearer relative’s daughter'],
+        answer: 2,
+        reference: 'Ruth 4:13',
+        explanation:
+          'Boaz took Ruth, the Moabite widow of Mahlon, as his wife. The LORD enabled her to ' +
+          'conceive, and she gave birth to a son. Naomi was Ruth’s mother-in-law, and Orpah had ' +
+          'returned to her own people in Moab (1:14–15).',
+      },
+      {
+        id: 'obed',
+        prompt: 'What was the name of Ruth and Boaz’s son?',
+        choices: ['Jesse', 'Obed', 'Mahlon', 'Elimelech'],
+        answer: 1,
+        reference: 'Ruth 4:17',
+        explanation:
+          'The women of the neighbourhood named him Obed. Obed became the father of Jesse, and ' +
+          'Jesse the father of King David (4:17, 22). Mahlon was Ruth’s first husband, and ' +
+          'Elimelech was Naomi’s husband.',
+      },
+      {
+        id: 'naomi-restored',
+        prompt: 'What did the women say about Naomi after Obed’s birth?',
+        choices: [
+          'She would return to Moab.',
+          'Her life would be renewed and she would be sustained in old age.',
+          'She would become queen.',
+          'She would inherit Boaz’s entire estate immediately.',
+        ],
+        answer: 1,
+        reference: 'Ruth 4:14–15',
+        explanation:
+          'The women praised the LORD for not leaving Naomi without a redeemer. The child would ' +
+          'renew her life and sustain her in old age, born to Ruth, the daughter-in-law who ' +
+          'loved her and was better to her than seven sons.',
+      },
+      {
+        id: 'theme',
+        prompt: 'What is one major theme we can observe in the story?',
+        choices: [
+          'Faithfulness, redemption, and restoration.',
+          'Wealth is the only source of happiness.',
+          'People should avoid family responsibilities.',
+          'Every unexpected event is automatically a miracle.',
+        ],
+        answer: 0,
+        reference: 'Ruth 4 (especially vv. 13–17)',
+        explanation:
+          'Ruth’s faithfulness and Boaz’s integrity lead to land redeemed, a family line ' +
+          'preserved and Naomi restored. The narrator names God’s direct action only rarely ' +
+          '(for example, “the LORD gave her conception”, v. 13). Seeing God’s providence in ' +
+          'ordinary timing, such as the relative passing by just as Boaz sat at the gate (v. 1), ' +
+          'is a theological reading of the story, not a claim that every coincidence is a miracle.',
+      },
+    ],
+
+    reflection: {
+      question:
+        'Naomi began the story feeling empty. How did the events in Ruth 4 contribute to her restoration?',
+      closingThought:
+        'Redemption in Ruth 4 was not merely about a transaction. It involved responsibility, ' +
+        'family restoration, and a future that extended beyond the immediate circumstances of Naomi and Ruth.',
+      passage: {
+        reference: 'Ruth 4:14–17',
+        translation: 'King James Version (public domain)',
+        verses: [
+          { n: 14, text: 'And the women said unto Naomi, Blessed be the LORD, which hath not left thee this day without a kinsman, that his name may be famous in Israel.' },
+          { n: 15, text: 'And he shall be unto thee a restorer of thy life, and a nourisher of thine old age: for thy daughter in law, which loveth thee, which is better to thee than seven sons, hath born him.' },
+          { n: 16, text: 'And Naomi took the child, and laid it in her bosom, and became nurse unto it.' },
+          { n: 17, text: 'And the women her neighbours gave it a name, saying, There is a son born to Naomi; and they called his name Obed: he is the father of Jesse, the father of David.' },
+        ],
+      },
+      transition:
+        'Now that we have explored the story, let us look more closely at what the redemption at ' +
+        'the city gate meant and how the chapter concludes the story of Ruth and Naomi.',
+    },
+  };
+
+  if (typeof module === 'object' && module.exports) module.exports = CONTENT;
+  else root.REDEEMER_CONTENT = CONTENT;
+})(typeof self !== 'undefined' ? self : this);

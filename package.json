@@ -1,0 +1,11 @@
+{
+  "name": "redeemers-challenge",
+  "private": true,
+  "description": "Ruth 4 Game Night: four interactive Bible-study games (GitHub Pages + Google Apps Script)",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "node dev/server.js",
+    "build:gas": "node scripts/build-gas.js",
+    "test": "node scripts/build-gas.js --check && node --test tests/*.test.js"
+  }
+}
