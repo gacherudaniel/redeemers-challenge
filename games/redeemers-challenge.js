@@ -42,7 +42,6 @@
     prefs: 'redeemer.prefs.v1',
     device: 'redeemer.device.v1',
     board: 'redeemer.board.v1', // sessionStorage: this tab's plays
-    responses: 'redeemer.responses.v1', // sessionStorage: reflection wall
   };
 
   function uuid() {
@@ -218,7 +217,7 @@
 
   // ───────────── Screens ─────────────
 
-  const SCREENS = ['welcome', 'setup-individual', 'setup-group', 'question', 'results', 'reflection', 'host'];
+  const SCREENS = ['welcome', 'setup-individual', 'setup-group', 'question', 'results', 'host'];
   let screen = 'welcome';
 
   function show(name, focusTarget) {
@@ -822,49 +821,6 @@
   }
 
   $('playAgainBtn').addEventListener('click', playAgain);
-  $('reflectionAgainBtn').addEventListener('click', playAgain);
-  $('toReflectionBtn').addEventListener('click', () => show('reflection', $('reflectionQuestion')));
-
-  // ───────────── Reflection ─────────────
-
-  function initReflection() {
-    const r = C.reflection;
-    $('reflectionQuestion').textContent = r.question;
-    $('closingThought').textContent = r.closingThought;
-    $('passageRef').textContent = r.passage.reference;
-    const box = $('passageText');
-    r.passage.verses.forEach((v) => {
-      const p = el('p');
-      p.append(el('sup', null, String(v.n)), document.createTextNode(v.text));
-      box.appendChild(p);
-    });
-    $('passageNote').textContent = r.passage.translation + '. Read it from your preferred translation if you like.';
-    $('transitionText').textContent = '“' + r.transition + '”';
-    renderResponses();
-  }
-
-  function renderResponses() {
-    const wall = $('responseWall');
-    wall.textContent = '';
-    const list = store.get('sessionStorage', KEYS.responses, []);
-    (Array.isArray(list) ? list : []).forEach((text) => wall.appendChild(el('li', null, String(text))));
-  }
-
-  $('reflectionForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const input = $('reflectionInput');
-    const text = input.value.replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 200);
-    if (!text) {
-      input.focus();
-      return;
-    }
-    const list = store.get('sessionStorage', KEYS.responses, []);
-    const next = (Array.isArray(list) ? list : []).concat(text).slice(-40);
-    store.set('sessionStorage', KEYS.responses, next);
-    $('responseWall').appendChild(el('li', null, text));
-    input.value = '';
-    input.focus();
-  });
 
   // ───────────── Host: live shared leaderboard ─────────────
 
@@ -929,13 +885,11 @@
 
   $('clearBoardBtn').addEventListener('click', () => {
     store.remove('sessionStorage', KEYS.board);
-    store.remove('sessionStorage', KEYS.responses);
-    renderResponses();
     if (screen === 'results' && game && game.mode === 'individual') {
       run.entryId = null;
       renderLocalBoard();
     }
-    toast('This device’s leaderboard and responses were cleared.');
+    toast('This device’s leaderboard was cleared.');
   });
 
   // ───────────── Hub entry points ─────────────
@@ -946,7 +900,6 @@
       if (!C) {
         C = window.REDEEMER_CONTENT;
         initWelcome();
-        initReflection();
         if (B.kind !== 'none') B.check().then(renderBackendStatus);
       }
       show('welcome');

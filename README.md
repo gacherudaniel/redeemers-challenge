@@ -92,7 +92,7 @@ Suggested running order (the defaults):
 
 **After the teaching: The Redeemer’s Challenge (5–8 min).**
 - Exactly as before: individual on phones, or Group mode on the projector with teams.
-- It ends with the reflection question, the closing thought, Ruth 4:14–17 and the facilitator transition.
+- It ends on the results and leaderboard screen.
 
 **Road to Bethlehem (5 min).**
 - Everyone races the same sequence of levels (same seed).
@@ -136,7 +136,7 @@ Keyboard shortcuts on the host screen:
 
 ### The Redeemer’s Challenge (quiz)
 
-The original game, with its questions, answers, references, explanations, timer, scoring and reflection untouched. The only changes were to fit it into the hub:
+The original game, with its questions, answers, references, explanations, timer and scoring untouched. The only changes were to fit it into the hub and to drop the closing reflection screen:
 
 - it opens from the hub menu;
 - theme and sound use the hub’s shared settings (sound is now off by default, as for every game);

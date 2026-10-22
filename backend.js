@@ -74,11 +74,17 @@
     return data;
   }
 
-  /** Pings the server once; later calls share the same answer. */
+  /**
+   * Pings the server once; later calls share the same answer. Apps Script can take
+   * 10–20 s to wake up, so the ping waits a while and is retried once before the page
+   * settles for playing on this device.
+   */
   function check() {
     if (kind === 'none') return Promise.resolve(status);
     if (!checking) {
-      checking = call('ping', {}, { timeoutMs: 10000 })
+      const ping = () => call('ping', {}, { timeoutMs: 20000 });
+      checking = ping()
+        .catch(ping)
         .then((data) => {
           status.connected = true;
           status.leaderboard = !!data.leaderboard;

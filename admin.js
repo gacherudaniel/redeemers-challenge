@@ -458,7 +458,7 @@
       schema.forEach((f) => grid.appendChild(schemaField(f, g.settings[f.key], (v) => { g.settings[f.key] = v; markDirty(); })));
       set.appendChild(grid);
     } else {
-      section(box, 'Questions', 'The Redeemer’s Challenge keeps its original eight questions, answers, references, scoring and reflection. They live in questions.js and are not editable here, so the quiz stays exactly as written.');
+      section(box, 'Questions', 'The Redeemer’s Challenge keeps its original eight questions, answers, references and scoring. They live in questions.js and are not editable here, so the quiz stays exactly as written.');
     }
     if (id === 'team-showdown') renderShowdownEditor(box, g.content);
     box.appendChild(el('p', 'field-help', 'Changes are saved with the Save button at the bottom of the screen.'));

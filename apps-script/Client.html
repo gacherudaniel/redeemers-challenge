@@ -13,7 +13,7 @@
  *   Players can change it in Settings.
  */
 window.REDEEMER_CONFIG = {
-  apiUrl: '',
+  apiUrl: 'https://script.google.com/macros/s/AKfycbzRrKJ-Wo6QaUMF57P6sSi0rUzRJQfh4RJ-vgQRa4irE2a5Ayp0OIMiqcvnbHGWUZre8A/exec',
   timerSeconds: 15,
 };
 
@@ -629,7 +629,7 @@ window.REDEEMER_CONFIG = {
   const GAME_TEXT = {
     'gleaners-rush': {
       title: 'Gleaner’s Rush',
-      description: 'Catch the falling barley, dodge the stones and thorns, and chase a combo. Quick fingers only, no Bible knowledge needed.',
+      description: 'Catch the falling barley, dodge the stones and thorns, and chase a combo. Quick fingers only.',
       closing: 'Great gleaning! Now let’s open Ruth 4 together.',
     },
     'redeemers-challenge': {
@@ -1198,11 +1198,17 @@ window.REDEEMER_CONFIG = {
     return data;
   }
 
-  /** Pings the server once; later calls share the same answer. */
+  /**
+   * Pings the server once; later calls share the same answer. Apps Script can take
+   * 10–20 s to wake up, so the ping waits a while and is retried once before the page
+   * settles for playing on this device.
+   */
   function check() {
     if (kind === 'none') return Promise.resolve(status);
     if (!checking) {
-      checking = call('ping', {}, { timeoutMs: 10000 })
+      const ping = () => call('ping', {}, { timeoutMs: 20000 });
+      checking = ping()
+        .catch(ping)
         .then((data) => {
           status.connected = true;
           status.leaderboard = !!data.leaderboard;
@@ -1912,7 +1918,7 @@ window.REDEEMER_CONFIG = {
             role = 'participant';
           }
         }
-        await pull();
+        await pull().catch(pull); // one retry: the first request can be slow while Apps Script wakes up
       } catch (e) {
         lastError = e;
         if (!pub) {
@@ -5673,7 +5679,6 @@ window.REDEEMER_CONFIG = {
     prefs: 'redeemer.prefs.v1',
     device: 'redeemer.device.v1',
     board: 'redeemer.board.v1', // sessionStorage: this tab's plays
-    responses: 'redeemer.responses.v1', // sessionStorage: reflection wall
   };
 
   function uuid() {
@@ -5849,7 +5854,7 @@ window.REDEEMER_CONFIG = {
 
   // ───────────── Screens ─────────────
 
-  const SCREENS = ['welcome', 'setup-individual', 'setup-group', 'question', 'results', 'reflection', 'host'];
+  const SCREENS = ['welcome', 'setup-individual', 'setup-group', 'question', 'results', 'host'];
   let screen = 'welcome';
 
   function show(name, focusTarget) {
@@ -6453,49 +6458,6 @@ window.REDEEMER_CONFIG = {
   }
 
   $('playAgainBtn').addEventListener('click', playAgain);
-  $('reflectionAgainBtn').addEventListener('click', playAgain);
-  $('toReflectionBtn').addEventListener('click', () => show('reflection', $('reflectionQuestion')));
-
-  // ───────────── Reflection ─────────────
-
-  function initReflection() {
-    const r = C.reflection;
-    $('reflectionQuestion').textContent = r.question;
-    $('closingThought').textContent = r.closingThought;
-    $('passageRef').textContent = r.passage.reference;
-    const box = $('passageText');
-    r.passage.verses.forEach((v) => {
-      const p = el('p');
-      p.append(el('sup', null, String(v.n)), document.createTextNode(v.text));
-      box.appendChild(p);
-    });
-    $('passageNote').textContent = r.passage.translation + '. Read it from your preferred translation if you like.';
-    $('transitionText').textContent = '“' + r.transition + '”';
-    renderResponses();
-  }
-
-  function renderResponses() {
-    const wall = $('responseWall');
-    wall.textContent = '';
-    const list = store.get('sessionStorage', KEYS.responses, []);
-    (Array.isArray(list) ? list : []).forEach((text) => wall.appendChild(el('li', null, String(text))));
-  }
-
-  $('reflectionForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const input = $('reflectionInput');
-    const text = input.value.replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 200);
-    if (!text) {
-      input.focus();
-      return;
-    }
-    const list = store.get('sessionStorage', KEYS.responses, []);
-    const next = (Array.isArray(list) ? list : []).concat(text).slice(-40);
-    store.set('sessionStorage', KEYS.responses, next);
-    $('responseWall').appendChild(el('li', null, text));
-    input.value = '';
-    input.focus();
-  });
 
   // ───────────── Host: live shared leaderboard ─────────────
 
@@ -6560,13 +6522,11 @@ window.REDEEMER_CONFIG = {
 
   $('clearBoardBtn').addEventListener('click', () => {
     store.remove('sessionStorage', KEYS.board);
-    store.remove('sessionStorage', KEYS.responses);
-    renderResponses();
     if (screen === 'results' && game && game.mode === 'individual') {
       run.entryId = null;
       renderLocalBoard();
     }
-    toast('This device’s leaderboard and responses were cleared.');
+    toast('This device’s leaderboard was cleared.');
   });
 
   // ───────────── Hub entry points ─────────────
@@ -6577,7 +6537,6 @@ window.REDEEMER_CONFIG = {
       if (!C) {
         C = window.REDEEMER_CONTENT;
         initWelcome();
-        initReflection();
         if (B.kind !== 'none') B.check().then(renderBackendStatus);
       }
       show('welcome');

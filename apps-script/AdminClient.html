@@ -13,7 +13,7 @@
  *   Players can change it in Settings.
  */
 window.REDEEMER_CONFIG = {
-  apiUrl: '',
+  apiUrl: 'https://script.google.com/macros/s/AKfycbzRrKJ-Wo6QaUMF57P6sSi0rUzRJQfh4RJ-vgQRa4irE2a5Ayp0OIMiqcvnbHGWUZre8A/exec',
   timerSeconds: 15,
 };
 
@@ -571,7 +571,7 @@ window.REDEEMER_CONFIG = {
   const GAME_TEXT = {
     'gleaners-rush': {
       title: 'Gleaner’s Rush',
-      description: 'Catch the falling barley, dodge the stones and thorns, and chase a combo. Quick fingers only, no Bible knowledge needed.',
+      description: 'Catch the falling barley, dodge the stones and thorns, and chase a combo. Quick fingers only.',
       closing: 'Great gleaning! Now let’s open Ruth 4 together.',
     },
     'redeemers-challenge': {
@@ -1140,11 +1140,17 @@ window.REDEEMER_CONFIG = {
     return data;
   }
 
-  /** Pings the server once; later calls share the same answer. */
+  /**
+   * Pings the server once; later calls share the same answer. Apps Script can take
+   * 10–20 s to wake up, so the ping waits a while and is retried once before the page
+   * settles for playing on this device.
+   */
   function check() {
     if (kind === 'none') return Promise.resolve(status);
     if (!checking) {
-      checking = call('ping', {}, { timeoutMs: 10000 })
+      const ping = () => call('ping', {}, { timeoutMs: 20000 });
+      checking = ping()
+        .catch(ping)
         .then((data) => {
           status.connected = true;
           status.leaderboard = !!data.leaderboard;
@@ -1854,7 +1860,7 @@ window.REDEEMER_CONFIG = {
             role = 'participant';
           }
         }
-        await pull();
+        await pull().catch(pull); // one retry: the first request can be slow while Apps Script wakes up
       } catch (e) {
         lastError = e;
         if (!pub) {
@@ -3053,7 +3059,7 @@ window.REDEEMER_CONFIG = {
       schema.forEach((f) => grid.appendChild(schemaField(f, g.settings[f.key], (v) => { g.settings[f.key] = v; markDirty(); })));
       set.appendChild(grid);
     } else {
-      section(box, 'Questions', 'The Redeemer’s Challenge keeps its original eight questions, answers, references, scoring and reflection. They live in questions.js and are not editable here, so the quiz stays exactly as written.');
+      section(box, 'Questions', 'The Redeemer’s Challenge keeps its original eight questions, answers, references and scoring. They live in questions.js and are not editable here, so the quiz stays exactly as written.');
     }
     if (id === 'team-showdown') renderShowdownEditor(box, g.content);
     box.appendChild(el('p', 'field-help', 'Changes are saved with the Save button at the bottom of the screen.'));

@@ -158,7 +158,7 @@
             role = 'participant';
           }
         }
-        await pull();
+        await pull().catch(pull); // one retry: the first request can be slow while Apps Script wakes up
       } catch (e) {
         lastError = e;
         if (!pub) {

@@ -265,39 +265,6 @@
 
       <div class="actions">
         <button type="button" class="btn btn-ghost" id="playAgainBtn">Play again</button>
-        <button type="button" class="btn btn-primary" id="toReflectionBtn">Continue to reflection</button>
-      </div>
-    </section>
-
-    <!-- Reflection -->
-    <section class="screen screen-reflection" id="screen-reflection" aria-labelledby="reflectionQuestion" hidden>
-      <p class="eyebrow">Reflect together</p>
-      <h2 class="display-sm reflection-q" id="reflectionQuestion" tabindex="-1"></h2>
-      <p class="lead">Share your thoughts aloud, or add a short response below.</p>
-      <form class="reflection-form" id="reflectionForm" novalidate>
-        <label class="sr-only" for="reflectionInput">Your response</label>
-        <textarea class="input" id="reflectionInput" rows="2" maxlength="200" placeholder="A thought in a sentence or two…"></textarea>
-        <button type="submit" class="btn btn-ghost">Add</button>
-      </form>
-      <ul class="response-wall" id="responseWall" aria-label="Responses shared on this screen"></ul>
-      <p class="field-help">Responses stay on this screen only. They are not sent anywhere.</p>
-
-      <blockquote class="closing-thought" id="closingThought"></blockquote>
-
-      <article class="card passage">
-        <p class="eyebrow">Read before the teaching</p>
-        <h3 class="passage-ref" id="passageRef"></h3>
-        <div class="passage-text" id="passageText"></div>
-        <p class="muted passage-note" id="passageNote"></p>
-      </article>
-
-      <div class="transition-card">
-        <p class="eyebrow">Facilitator transition</p>
-        <p class="transition-text" id="transitionText"></p>
-      </div>
-
-      <div class="actions">
-        <button type="button" class="btn btn-ghost" id="reflectionAgainBtn">Play again</button>
         <button type="button" class="btn btn-primary" data-go="welcome">Back to start</button>
       </div>
     </section>

@@ -60,7 +60,7 @@ To rehearse shared mode without Google, run `npm run dev` and use the admin key 
 - [ ] Phone (portrait): menu, all four games, the results screens, and the Team Showdown buzzer screen fit without sideways scrolling.
 - [ ] Laptop: mouse and keyboard controls work (Rush ← →; Road arrows + Space; quiz 1–4; host N/1–4/C/X/R/P/A).
 - [ ] Projector: Present → Welcome screen, the live leaderboards and the Team Showdown host are readable from the back. The answer stays hidden until **Peek** (A).
-- [ ] The Redeemer’s Challenge plays exactly as before (questions, timer, scoring, reflection, Ruth 4:14–17, transition).
+- [ ] The Redeemer’s Challenge plays exactly as before (questions, timer, scoring, results; no reflection screen).
 
 ## 8. Facilitator controls
 - [ ] Session → “Only when I press Start”: phones show “Waiting for the facilitator”.

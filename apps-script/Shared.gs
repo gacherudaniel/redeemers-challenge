@@ -312,7 +312,7 @@
   const GAME_TEXT = {
     'gleaners-rush': {
       title: 'Gleaner’s Rush',
-      description: 'Catch the falling barley, dodge the stones and thorns, and chase a combo. Quick fingers only, no Bible knowledge needed.',
+      description: 'Catch the falling barley, dodge the stones and thorns, and chase a combo. Quick fingers only.',
       closing: 'Great gleaning! Now let’s open Ruth 4 together.',
     },
     'redeemers-challenge': {
